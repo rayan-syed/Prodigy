@@ -1,9 +1,8 @@
-# save as: build_prodigy_inputs.py
 import os
 import pandas as pd
 
 # === CONFIG ===
-DATA_DIR = "."  # directory containing your three source CSVs
+DATA_DIR = "."  
 TRAIN_FILE = "train.csv"
 TEST_ABN_FILE = "test_abnormal_with_labels.csv"
 TEST_NORM_FILE = "test_normal.csv"
