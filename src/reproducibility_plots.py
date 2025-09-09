@@ -39,7 +39,7 @@ def main(results_dir, plot_output_dir):
 
     # Available experiment repetitions and covered experimental configurations
     expConfig_nums = [0, 1, 2, 3, 4, 5]
-    repeat_nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    repeat_nums = [0]
 
     results_list = []
 
@@ -98,9 +98,10 @@ def main(results_dir, plot_output_dir):
     
 
 if __name__ == '__main__':
-
-    results_dir = "/home/cc/prodigy_ae_output/results" 
-    plot_output_dir = "/home/cc/prodigy_ae_output/plots"
+    output_dir= "social_media_output"
+    base_dir = "."
+    results_dir = f"{base_dir}/{output_dir}/results" 
+    plot_output_dir = f"{base_dir}/{output_dir}/plots"
     verbose = True
 
     if not os.path.exists(plot_output_dir):

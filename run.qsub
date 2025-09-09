@@ -1,0 +1,16 @@
+#!/bin/bash -l
+
+#$ -j y
+#$ -N anom
+#$ -o logs/anom.qlog
+
+#$ -l h_rt=12:00:00
+#$ -pe omp 8
+
+#$ -l gpus=1
+
+module load miniconda
+module load cuda/11.0
+conda activate prodigy36
+
+python src/reproducibility_experiments.py && python src/reproducibility_plots.py

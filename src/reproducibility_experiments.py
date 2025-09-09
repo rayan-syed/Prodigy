@@ -96,7 +96,17 @@ def main(repeat_nums, expConfig_nums, data_dir, pre_selected_features_filename, 
                 }
             }
 
-            curr_all_y = all_y[(all_y['app_name'].isin(selected_apps)) & (all_y['anom_name'].isin(selected_labels))]
+            # curr_all_y = all_y[(all_y['app_name'].isin(selected_apps)) & (all_y['anom_name'].isin(selected_labels))]
+
+            if {"app_name", "anom_name"}.issubset(all_y.columns):
+                mask = all_y["app_name"].isin(selected_apps) & all_y["anom_name"].isin(selected_labels)
+                if mask.sum() == 0:
+                    logging.info("Skipping hard-coded app/label filter (no matches for this dataset).")
+                    curr_all_y = all_y
+                else:
+                    curr_all_y = all_y[mask]
+            else:
+                curr_all_y = all_y
 
             healthy_labels = curr_all_y[curr_all_y['binary_anom'] == 0]
             anom_labels = curr_all_y[curr_all_y['binary_anom'] != 0]
@@ -258,14 +268,14 @@ def main(repeat_nums, expConfig_nums, data_dir, pre_selected_features_filename, 
             logging.info("Results generated and saved to the corresponding directory")
 
 if __name__ == '__main__':
-    
-    repeat_nums = [0, 1, 2, 3, 4 ]
+    base_dir = "."
+    repeat_nums = [0]
     expConfig_nums = [0, 1, 2, 3, 4, 5]
-    data_dir = "/home/cc/prodigy_artifacts/"
+    data_dir = f"{base_dir}/data/social_media_single_trace_dataset/for_prodigy/"
     #If this parameter is set, it will use the previously determined parameters, if it's None, it's going to extract features
-    pre_selected_features_filename = "/home/cc/prodigy_artifacts/fe_eclipse_tsfresh_raw_CHI_2000.json"    
-    output_dir = "/home/cc/prodigy_ae_output"
+    pre_selected_features_filename = None # f"{data_dir}fe_eclipse_tsfresh_raw_CHI_2000.json"    
+    output_dir = f"{base_dir}/social_media_output"
     verbose = True  # Set to True to display important logging INFO messages, otherwise it will print all logging messages
     main(repeat_nums, expConfig_nums, data_dir, pre_selected_features_filename, output_dir, verbose)
-    
+
     logging.info("Script is completed")
