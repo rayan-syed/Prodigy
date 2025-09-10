@@ -133,7 +133,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# other ignored files
+# other ignored files for experiments
 logs/*
 *.h5
 data/social_media*
+data/train_ticket/original/*.csv
+data/train_ticket/for_prodigy
