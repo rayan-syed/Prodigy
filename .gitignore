@@ -136,3 +136,4 @@ dmypy.json
 # other ignored files
 logs/*
 *.h5
+data/social_media*
