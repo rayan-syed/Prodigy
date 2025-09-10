@@ -268,13 +268,16 @@ def main(repeat_nums, expConfig_nums, data_dir, pre_selected_features_filename, 
             logging.info("Results generated and saved to the corresponding directory")
 
 if __name__ == '__main__':
+    # important to change
     base_dir = "."
+    dataset = "train_ticket" # "social_media"
+
     repeat_nums = [0]
     expConfig_nums = [0, 1, 2, 3, 4, 5]
-    data_dir = f"{base_dir}/data/social_media_single_trace_dataset/for_prodigy/"
+    data_dir = f"{base_dir}/data/{dataset}/for_prodigy/"
     #If this parameter is set, it will use the previously determined parameters, if it's None, it's going to extract features
     pre_selected_features_filename = None # f"{data_dir}fe_eclipse_tsfresh_raw_CHI_2000.json"    
-    output_dir = f"{base_dir}/social_media_output"
+    output_dir = f"{base_dir}/{dataset}_output"
     verbose = True  # Set to True to display important logging INFO messages, otherwise it will print all logging messages
     main(repeat_nums, expConfig_nums, data_dir, pre_selected_features_filename, output_dir, verbose)
 

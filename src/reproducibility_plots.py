@@ -98,7 +98,9 @@ def main(results_dir, plot_output_dir):
     
 
 if __name__ == '__main__':
-    output_dir= "social_media_output"
+    # only variable to change
+    output_dir= "train_ticket_output"
+
     base_dir = "."
     results_dir = f"{base_dir}/{output_dir}/results" 
     plot_output_dir = f"{base_dir}/{output_dir}/plots"
