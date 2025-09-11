@@ -245,7 +245,8 @@ def main(repeat_nums, expConfig_nums, data_dir, pre_selected_features_filename, 
                 assert all(x_test_scaled.columns == x_train_scaled.columns)
                 assert all(x_test_scaled.index == y_test.index)
 
-                y_pred_test, x_test_recon_errors = vae.predict_anomaly(x_test_scaled)
+                save_path = f"{output_dir}/expConfig_{expConfig_num}_localized_span.csv"
+                y_pred_test, x_test_recon_errors = vae.predict_anomaly(x_test_scaled, save=save_path)
                 logging.debug(f"Test data prediction results: {y_pred_test}")
                 logging.debug(f"Selected threshold value: {vae.threshold}")
 
@@ -270,7 +271,7 @@ def main(repeat_nums, expConfig_nums, data_dir, pre_selected_features_filename, 
 if __name__ == '__main__':
     # important to change
     base_dir = "."
-    dataset = "train_ticket" # "social_media"
+    dataset = "train_ticket" # "social_media", "train_ticket"
 
     repeat_nums = [0]
     expConfig_nums = [0, 1, 2, 3, 4, 5]

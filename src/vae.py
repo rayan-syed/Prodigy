@@ -4,6 +4,7 @@ from tensorflow.keras import Model, optimizers, layers
 from tensorflow.keras import backend as K
 from tensorflow.keras.callbacks import ModelCheckpoint
 import numpy as np
+import pandas as pd
 
 from tensorflow.python.framework.ops import disable_eager_execution
 disable_eager_execution()
@@ -103,14 +104,22 @@ class VAE(tf.keras.Model):
         self.threshold = np.percentile(mae_train.values, 99)
         self.threshold_90 = np.percentile(mae_train.values, 90)
         
-    def calculate_reconstruction_error(self, data):
+    def calculate_reconstruction_error(self, data, save=None):
                 
         recon_data = self.model.predict(data)
+        
+        save=None # disable span localization capture
+        # get error vector for span localization
+        errors = np.abs(np.asarray(data) - recon_data)
+        if save:
+            max_error_cols = np.argmax(errors, axis=1)
+            pd.DataFrame({'max_error_column': max_error_cols}).to_csv(save, index=False)
+
         return np.mean(np.abs(data - recon_data), axis=1)
     
-    def predict_anomaly(self, data):
+    def predict_anomaly(self, data, save=None):
         
-        mae_data = self.calculate_reconstruction_error(data)
+        mae_data = self.calculate_reconstruction_error(data, save)
         
         pred = [1 if curr_mae > self.threshold else 0 for curr_mae in mae_data]
         
